@@ -1,3 +1,4 @@
+import AppLayout from '@/components/AppLayout';
 import LeadManagementClient from './components/LeadManagementClient';
 
 export const metadata = {
@@ -6,5 +7,9 @@ export const metadata = {
 };
 
 export default function LeadManagementPage() {
-  return <LeadManagementClient />;
+  return (
+    <AppLayout>
+      <LeadManagementClient />
+    </AppLayout>
+  );
 }
