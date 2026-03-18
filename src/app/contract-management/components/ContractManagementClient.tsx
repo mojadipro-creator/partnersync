@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { Plus, Download, AlertTriangle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { Contract } from '@/lib/mockData';
 import { contractService } from '@/lib/supabaseService';
 import { toast } from 'sonner';
@@ -37,6 +38,7 @@ interface Filters {
 
 export default function ContractManagementClient() {
   const { loading, contracts, error } = useContracts();
+  const router = useRouter();
   const [filters, setFilters] = useState<Filters>({ search: '', jenis: '', status: '', compliance: '', region: '' });
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [complianceContract, setComplianceContract] = useState<Contract | null>(null);
@@ -99,7 +101,7 @@ export default function ContractManagementClient() {
             <Download size={14} /> Ekspor
           </button>
           <button
-            onClick={() => toast.success('Form buat kontrak baru dibuka')}
+            onClick={() => router.push('/contract-creation')}
             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-600 hover:bg-primary/90 transition-all active:scale-95 shadow-sm"
           >
             <Plus size={14} /> Buat Kontrak Baru

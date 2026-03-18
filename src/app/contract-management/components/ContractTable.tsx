@@ -65,10 +65,21 @@ function SortIcon({ column, sortKey, sortDir }: { column: SortKey; sortKey: Sort
     : <ChevronDown size={12} className="text-primary" />;
 }
 
+const BENTUK_KERJASAMA_COLORS: Record<string, string> = {
+  'Sewa': 'bg-blue-50 text-blue-700',
+  'BGS': 'bg-purple-50 text-purple-700',
+  'BSG': 'bg-violet-50 text-violet-700',
+  'KSU': 'bg-teal-50 text-teal-700',
+  'KSO': 'bg-cyan-50 text-cyan-700',
+  'Pinjam Pakai': 'bg-amber-50 text-amber-700',
+  'Joint Venture': 'bg-emerald-50 text-emerald-700',
+  'Lainnya': 'bg-gray-50 text-gray-600',
+};
+
 function SkeletonRow() {
   return (
     <tr className="animate-pulse">
-      {Array.from({ length: 11 }).map((_, i) => (
+      {Array.from({ length: 13 }).map((_, i) => (
         <td key={i} className="px-3 py-3.5">
           <div className="h-4 bg-muted rounded" style={{ width: i === 0 ? 20 : i === 1 ? 120 : i === 2 ? 160 : 80 }} />
         </td>
@@ -148,6 +159,8 @@ export default function ContractTable({
                 </div>
               </th>
               <th className="px-3 py-3 text-left text-[11px] font-600 uppercase tracking-wide text-muted-foreground whitespace-nowrap">Jenis</th>
+              <th className="px-3 py-3 text-left text-[11px] font-600 uppercase tracking-wide text-muted-foreground whitespace-nowrap">Bentuk Kerjasama</th>
+              <th className="px-3 py-3 text-right text-[11px] font-600 uppercase tracking-wide text-muted-foreground whitespace-nowrap">Tarif (Rp)</th>
               <th
                 className={`${thClass('nilaiKontrak')} text-[11px] font-600 uppercase tracking-wide text-right`}
                 onClick={() => handleSort('nilaiKontrak')}
@@ -196,7 +209,7 @@ export default function ContractTable({
               : sorted.length === 0
               ? (
                 <tr>
-                  <td colSpan={12} className="py-16 text-center">
+                  <td colSpan={14} className="py-16 text-center">
                     <FileText size={36} className="mx-auto text-muted-foreground/30 mb-3" />
                     <p className="text-sm font-600 text-muted-foreground">Tidak ada kontrak ditemukan</p>
                     <p className="text-xs text-muted-foreground mt-1">Coba ubah filter atau kata kunci pencarian</p>
@@ -205,6 +218,7 @@ export default function ContractTable({
               )
               : sorted.map((contract) => {
                   const isSelected = selectedIds.includes(contract.id);
+                  const bentukColor = contract.bentukKerjasama ? BENTUK_KERJASAMA_COLORS[contract.bentukKerjasama] ?? 'bg-gray-50 text-gray-600' : '';
                   return (
                     <tr
                       key={contract.id}
@@ -237,6 +251,24 @@ export default function ContractTable({
                       </td>
                       <td className="px-3 py-3.5">
                         <span className="text-xs font-500 whitespace-nowrap text-foreground/80">{contract.jenisKontrak}</span>
+                      </td>
+                      <td className="px-3 py-3.5">
+                        {contract.bentukKerjasama ? (
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-600 whitespace-nowrap ${bentukColor}`}>
+                            {contract.bentukKerjasama}
+                          </span>
+                        ) : (
+                          <span className="text-xs text-muted-foreground/50">—</span>
+                        )}
+                      </td>
+                      <td className="px-3 py-3.5 text-right">
+                        {contract.tarif != null ? (
+                          <span className="font-mono text-xs font-500 text-foreground/80 tabular-nums whitespace-nowrap">
+                            Rp {formatRp(contract.tarif)}
+                          </span>
+                        ) : (
+                          <span className="text-xs text-muted-foreground/50">—</span>
+                        )}
                       </td>
                       <td className="px-3 py-3.5 text-right">
                         <span className="font-mono text-xs font-600 text-foreground tabular-nums whitespace-nowrap">
