@@ -1,3 +1,4 @@
+import AppLayout from '@/components/AppLayout';
 import NegotiationTrackerClient from './components/NegotiationTrackerClient';
 
 export const metadata = {
@@ -6,5 +7,9 @@ export const metadata = {
 };
 
 export default function NegotiationTrackerPage() {
-  return <NegotiationTrackerClient />;
+  return (
+    <AppLayout>
+      <NegotiationTrackerClient />
+    </AppLayout>
+  );
 }

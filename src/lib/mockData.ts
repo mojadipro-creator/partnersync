@@ -5,6 +5,8 @@ export interface Contract {
   mitraId: string;
   jenisKontrak: 'MoU' | 'PKS' | 'Perjanjian Kerjasama' | 'Addendum' | 'TUKS' | 'Pemanfaatan Lahan';
   nilaiKontrak: number;
+  tarif?: number;
+  bentukKerjasama?: 'Sewa' | 'BGS' | 'BSG' | 'KSU' | 'KSO' | 'Pinjam Pakai' | 'Joint Venture' | 'Lainnya';
   tanggalMulai: string;
   tanggalAkhir: string;
   sisaHari: number;
