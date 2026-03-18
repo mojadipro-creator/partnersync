@@ -19,6 +19,7 @@ import {
   ClipboardList,
   AlertTriangle,
   FilePlus,
+  BookMarked,
 } from 'lucide-react';
 
 interface NavItem {
@@ -62,6 +63,12 @@ const navItems: NavItem[] = [
     href: '/negotiation-tracker',
     icon: <ClipboardList size={18} />,
     badge: 2,
+  },
+  {
+    group: 'Pipeline',
+    label: 'Peraturan & Tarif',
+    href: '/peraturan-tarif',
+    icon: <BookMarked size={18} />,
   },
   {
     group: 'Pipeline',
